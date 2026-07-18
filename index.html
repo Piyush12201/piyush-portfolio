@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piyush Anvekar — Full-Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-paper: #fdfbf7;
+    --ink: #111e2b;
+    --grid: #e2e8f0;
+    --accent: #c66a26;
+    --border-dark: #111e2b;
+  }
+
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    background-color: var(--bg-paper);
+    background-image: 
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 25px 25px;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    line-height: 1.6;
+  }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  /* Registration Framing Marks */
+  .mark-corner { position: fixed; width: 24px; height: 24px; border: 1px solid var(--ink); z-index: 100; opacity: 0.6; pointer-events: none; }
+  .tl { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+  .tr { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+  .bl { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+  .br { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+  /* Navigation Bar */
+  header {
+    padding: 30px 60px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 2px solid var(--border-dark);
+    background: var(--bg-paper);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+  @media (max-width: 768px) { header { padding: 20px; flex-direction: column; gap: 15px; } }
+
+  .brand { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 15px; }
+  .brand .box { border: 2px solid var(--ink); padding: 4px 10px; font-family: 'IBM Plex Mono'; font-weight: 600; font-size: 14px; }
+  .brand .title { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+  .brand .title span { block; font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+
+  nav { display: flex; gap: 24px; font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; font-weight: 500; }
+  nav a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+  nav a:hover { border-bottom: 1px solid var(--ink); }
+
+  /* Main Shell Container */
+  .container { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+  @media (max-width: 768px) { .container { padding: 40px 20px; } }
+
+  /* Hero Architecture */
+  .hero-block { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; border-bottom: 2px solid var(--border-dark); padding-bottom: 60px; margin-bottom: 40px; }
+  @media (max-width: 900px) { .hero-block { grid-template-columns: 1fr; gap: 40px; } }
+
+  h1 { font-size: clamp(38px, 5vw, 62px); font-weight: 400; line-height: 1.1; margin: 0 0 24px; letter-spacing: -0.02em; }
+  h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  
+  .byline { font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #556677; margin-bottom: 30px; }
+  .byline b { color: var(--ink); }
+
+  .essay { font-size: 18px; color: #2d3d4d; font-weight: 300; text-align: justify; }
+  .essay p { margin: 0 0 20px; }
+  .essay p:first-of-type::first-letter { font-size: 52px; float: left; line-height: 0.8; padding: 4px 8px 0 0; color: var(--accent); font-family: 'Fraunces'; }
+
+  .cta-row { display: flex; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
+  .btn { font-family: 'IBM Plex Mono'; font-size: 12px; font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 12px 24px; border: 2px solid var(--ink); color: var(--ink); display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s ease; }
+  .btn.solid { background: var(--ink); color: var(--bg-paper); }
+  .btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+  /* Sidebar Meta Index */
+  .meta-index-box { border: 1px solid var(--ink); padding: 30px; background: rgba(0,0,0,0.01); height: fit-content; }
+  .meta-index-box h3 { margin: 0 0 20px 0; font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; color: var(--accent); border-bottom: 1px dashed var(--ink); padding-bottom: 8px; }
+  .meta-row { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono'; font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--grid); }
+  .meta-row:last-child { border-bottom: none; }
+  .meta-row .k { color: #667788; }
+  .meta-row .v { font-weight: 500; text-align: right; }
+
+  /* Section Layouts */
+  section { padding: 80px 0; border-top: 1px solid var(--ink); }
+  .section-label { font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; margin-bottom: 40px; display: flex; justify-content: space-between; color: var(--accent); font-weight: 600; }
+  .section-label span:last-child { color: var(--ink); font-weight: 400; }
+
+  /* Experience Cards Extended Architecture */
+  .exp-wrapper { display: flex; flex-direction: column; gap: 40px; }
+  .exp-item { border: 1px solid var(--ink); background: var(--bg-paper); }
+  
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; padding: 24px 30px; border-bottom: 1px solid var(--ink); background: rgba(0,0,0,0.02); }
+  @media (max-width: 600px) { .exp-header { flex-direction: column; gap: 5px; padding: 20px; } }
+  .exp-title h3 { margin: 0; font-size: 24px; font-weight: 500; }
+  .exp-title .sub { font-family: 'IBM Plex Mono'; font-size: 13px; color: var(--accent); margin-top: 4px; font-weight: 500; }
+  .exp-time { font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; text-align: right; }
+
+  .exp-body { display: flex; flex-direction: column; }
+  .bullet-row { display: grid; grid-template-columns: 140px 1fr; padding: 24px 30px; border-bottom: 1px solid var(--grid); }
+  .bullet-row:last-child { border-bottom: none; }
+  @media (max-width: 768px) { .bullet-row { grid-template-columns: 1fr; gap: 8px; padding: 20px; } }
+  .bullet-row .tag { font-family: 'IBM Plex Mono'; font-size: 11px; text-transform: uppercase; border: 1px solid var(--border-dark); padding: 3px 8px; width: fit-content; height: fit-content; font-weight: 500; }
+  .bullet-row p { margin: 0; font-size: 16px; color: #233343; text-align: justify; }
+
+  /* Projects Structural Grid */
+  .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } }
+  .project-card { border: 1px solid var(--ink); padding: 35px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+  .project-card .award { position: absolute; top: 20px; right: 20px; font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; background: var(--ink); color: var(--bg-paper); padding: 2px 8px; font-weight: 500; }
+  .project-card h4 { margin: 0 0 12px; font-size: 22px; font-weight: 500; padding-right: 80px; }
+  .project-card p { font-size: 15.5px; color: #3a4a5a; margin: 0 0 30px 0; }
+  .project-card .link { font-family: 'IBM Plex Mono'; font-size: 12px; color: var(--ink); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--ink); width: fit-content; padding-bottom: 2px; }
+  .project-card .link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* Toolkit / Matrix Split Listing */
+  .skills-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 768px) { .skills-matrix { grid-template-columns: 1fr; } }
+  .matrix-cell { border: 1px solid var(--ink); padding: 24px; }
+  .matrix-cell h5 { margin: 0 0 12px 0; font-family: 'IBM Plex Mono'; font-size: 13px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--grid); padding-bottom: 6px; }
+  .matrix-cell p { margin: 0; font-family: 'IBM Plex Mono'; font-size: 13.5px; color: var(--ink); line-height: 1.7; }
+
+  /* Industrial Block Information Block Footer */
+  .title-block-box { border: 2px solid var(--ink); display: flex; flex-direction: column; margin-top: 20px; }
+  .tb-row { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--ink); }
+  .tb-row:last-child { border-bottom: none; }
+  .tb-row.top-accent { grid-template-columns: 2fr 1fr; }
+  @media (max-width: 768px) { 
+    .tb-row { grid-template-columns: 1fr !important; } 
+    .tb-row > div { border-bottom: 1px solid var(--ink); }
+    .tb-row > div:last-child { border-bottom: none; }
+  }
+  .tb-cell { padding: 20px 24px; border-right: 1px solid var(--ink); }
+  .tb-cell:last-child { border-right: none; }
+  .tb-key { font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; color: #667788; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .tb-val { font-size: 17px; font-weight: 500; }
+  .tb-val.mono { font-family: 'IBM Plex Mono'; font-size: 14px; }
+  .tb-val a { color: var(--ink); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+  .tb-val a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .footer-meta { display: flex; justify-content: space-between; margin-top: 30px; font-family: 'IBM Plex Mono'; font-size: 11px; color: #667788; }
+</style>
+</head>
+<body>
+
+<div class="mark-corner tl"></div>
+<div class="mark-corner tr"></div>
+<div class="mark-corner bl"></div>
+<div class="mark-corner br"></div>
+
+<header>
+  <a href="#" class="brand">
+    <div class="box">PA</div>
+    <div class="title">Piyush Anvekar <span>Full-Stack Engineer</span></div>
+  </a>
+  <nav>
+    <a href="#work">Work Matrix</a>
+    <a href="#projects">System Assets</a>
+    <a href="#toolkit">Component Bill</a>
+    <a href="#contact">Title Index</a>
+  </nav>
+</header>
+
+<div class="container">
+  
+  <!-- Hero Section Shell -->
+  <div class="hero-block">
+    <div class="hero-content">
+      <div class="byline"><b>Engineering Log</b> — Portfolio Manifesto</div>
+      <h1>Some engineers write code. <br>I build <em>systems</em>.</h1>
+      <div class="essay">
+        <p>From defining the database schema and API contracts to designing responsive interfaces and deploying production-ready applications, I enjoy connecting every layer of the stack into one coherent product[cite: 1, 2, 3]. Whether it's an LMS serving thousands of students[cite: 1, 2, 3], an AI model detecting industrial defects[cite: 1, 2], a startup intelligence platform powered by LLMs[cite: 1, 2, 3], or an attendance system used daily[cite: 1, 2, 3], the goal stays the same: Reduce complexity. Improve reliability. Create something people can trust.</p>
+        <p>Two years in, that's the work I keep returning to: reading the signal out of the mess, then giving it a shape sturdy enough to build on[cite: 1, 2, 3]. Sometimes that shape is a database schema[cite: 1, 2, 3]. Sometimes it's a component tree[cite: 1, 2, 3]. Sometimes it's a model trained to watch production lines[cite: 1, 2].</p>
+      </div>
+      <div class="cta-row">
+        <!-- Relative path to local resume file asset or link to public drive file storage target -->
+        <a href="resume_ahmedabad_fullstack.pdf" download class="btn solid"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg> Download Resume</a>
+        <a href="mailto:panvekar49@gmail.com" class="btn">Get In Touch</a>
+      </div>
+    </div>
+    
+    <div class="meta-index-box">
+      <h3>System Target Profile</h3>
+      <div class="meta-row"><span class="k">Engineering Role</span><span class="v">Full-Stack Engineer</span></div>
+      <div class="meta-row"><span class="k">Experience Metric</span><span class="v">2+ Years Active</span></div>
+      <div class="meta-row"><span class="k">Primary Domain</span><span class="v">React / Next.js / Node.js</span></div>
+      <div class="meta-row"><span class="k">Core Schemas</span><span class="v">SQL &amp; NoSQL Architecture</span></div>
+      <div class="meta-row"><span class="k">Relocation Status</span><span class="v">Open to Ahmedabad</span></div>
+    </div>
+  </div>
+
+  <!-- Work Experience Section -->
+  <section id="work">
+    <div class="section-label"><span>01 // System Operational History</span><span>Interval: 2024 — 2026</span></div>
+    <div class="exp-wrapper">
+      <div class="exp-item">
+        <div class="exp-header">
+          <div class="exp-title">
+            <h3>Pravideon Pvt Ltd</h3>
+            <div class="sub">Founding Software Engineer</div>
+          </div>
+          <div class="exp-time">Aug 2024 — Feb 2026<br>Navi Mumbai, IN</div>
+        </div>
+        <div class="exp-body">
+          <div class="bullet-row">
+            <div class="tag">Architecture</div>
+            <p>Led project analysis and system design for EliteCodo, a full-stack LMS for JEE/NEET aspirants built from scratch and supporting 1,000+ students[cite: 1, 2, 3]. Architected a scalable Next.js/Node.js/Express application with Prisma-managed PostgreSQL schemas and Redux/Context API-driven state management[cite: 1, 2].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Component Library</div>
+            <p>Translated UI/UX designs into responsive, reusable React components for EliteCodo by building a component library driven by Hooks, Context API, and lifecycle-aware data fetching across authentication, assessment, and dashboard flows[cite: 3].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">APIs &amp; Auth</div>
+            <p>Designed and developed highly available REST and GraphQL APIs for authentication, assessments, and role-based access control, integrating third-party APIs (such as payment and notification providers) to support core platform workflows[cite: 1, 2].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Optimization</div>
+            <p>Reduced state-management boilerplate across LMS modules by adopting Zustand alongside Redux, improving component re-render efficiency and developer iteration speed[cite: 3].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Design System</div>
+            <p>Delivered a consistent, responsive UI across the LMS and corporate site, cutting cross-browser styling defects flagged in QA by ~15% by implementing Material UI components on a SCSS/SASS-based design system[cite: 1, 2, 3].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Performance</div>
+            <p>Cut initial page load time by ~20% by configuring and tuning Webpack bundling, Babel build tooling, and code-splitting for the Next.js application[cite: 1, 2, 3].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Computer Vision</div>
+            <p>Engineered an AI-powered fire detection platform integrating TensorFlow, OpenCV, Modbus TCP/IP, and PostgreSQL, reducing manual inspection time by ~30% across 5+ production lines[cite: 1, 2].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Corporate Core</div>
+            <p>Improved site performance to a Lighthouse score of ~90 by designing and shipping the Pravideon corporate website with a modular, reusable component architecture[cite: 1, 2].</p>
+          </div>
+          <div class="bullet-row">
+            <div class="tag">Agile Pipeline</div>
+            <p>Collaborated with product, design, and backend stakeholders in Agile/Scrum sprints including standups, sprint planning, and code reviews to ship iterative feature releases[cite: 3].</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <div class="section-label"><span>02 // Selected System Deployments</span><span>Independent Projects</span></div>
+    <div class="project-grid">
+      <div class="project-card">
+        <span class="award">Echelon '25 Winner</span>
+        <h4>AI P&amp;ID Digitization</h4>
+        <p>Built a computer vision pipeline achieving 92% accuracy converting engineering blueprints into structured JSON/SQL schemas, using symbol recognition and deep learning models[cite: 1, 2, 3].</p>
+      </div>
+      <div class="project-card">
+        <h4>Expa AI</h4>
+        <p>An AI-powered startup and career intelligence platform combining market scoring, financial modeling, competitive positioning, and investor-readiness workflows[cite: 2]. Integrates multiple LLM APIs for resume parsing, candidate profiling, and skill-gap-based career recommendations[cite: 1, 3].</p>
+        <a href="https://expa-ai.pravideon.com" target="_blank" class="link">expa-ai.pravideon.com ↗</a>
+      </div>
+      <div class="project-card">
+        <h4>BATU Alumni Network</h4>
+        <p>A full-stack networking platform supporting 20+ registered alumni, featuring integrated mentorship matching algorithms, active job postings, and community discovery tools[cite: 1, 2, 3].</p>
+        <a href="https://batualumni.pravideon.com" target="_blank" class="link">batualumni.pravideon.com ↗</a>
+      </div>
+      <div class="project-card">
+        <h4>SAAM Attendance Management System</h4>
+        <p>A centralized attendance platform serving 300+ students and staff, implementing custom role-based management dashboards and automated analytical reporting workflows[cite: 1, 2, 3].</p>
+        <a href="https://saam.vishwaniketan.edu.in" target="_blank" class="link">saam.vishwaniketan.edu.in ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Component Matrix Section -->
+  <section id="toolkit">
+    <div class="section-label"><span>03 // Bill of System Materials</span><span>Inventory Components</span></div>
+    <div class="skills-matrix">
+      <div class="matrix-cell">
+        <h5>Languages</h5>
+        <p>TypeScript, JavaScript (ES6+), Python, SQL, C++[cite: 1, 2, 3]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>Frontend Architecture</h5>
+        <p>React, Next.js, Vue.js, Hooks, Context API, Component Lifecycle, HTML5, CSS3, TailwindCSS, Material UI, SCSS/SASS[cite: 1, 2, 3]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>Backend &amp; Database</h5>
+        <p>Node.js, Express.js, RESTful APIs, GraphQL, PostgreSQL, MySQL, MongoDB, Redis[cite: 1, 2, 3]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>ORM Tooling</h5>
+        <p>Prisma, Mongoose[cite: 1, 2]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>State &amp; Build Systems</h5>
+        <p>Redux, Zustand, Webpack, Babel, Vite[cite: 1, 2, 3]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>Testing Infrastructure</h5>
+        <p>Jest, React Testing Library, Mocha[cite: 1, 2, 3]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>Additional Mechanics</h5>
+        <p>Third-Party API Integration, Agile/Scrum Methodologies, Git, Docker, Linux[cite: 1, 2, 3]</p>
+      </div>
+      <div class="matrix-cell">
+        <h5>Verified Achievements</h5>
+        <p>• Echelon '25 Industrial Automation Champion<br>• Avishkar State Telemetry Finalist<br>• Technical Head, SAAM[cite: 1, 2, 3]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Title Block Contact Footer Section -->
+  <footer id="contact">
+    <div class="section-label"><span>04 // Technical Document Title Block</span><span>Scale 1:1 Engine</span></div>
+    <div class="title-block-box">
+      <div class="tb-row top-accent">
+        <div class="tb-cell">
+          <div class="tb-key">Designation Profile Document</div>
+          <div class="tb-val">Piyush Anvekar Engineering Asset Portfolio</div>
+        </div>
+        <div class="tb-cell">
+          <div class="tb-key">Sheet Reference ID</div>
+          <div class="tb-val mono">SHEET 04 // 04</div>
+        </div>
+      </div>
+      <div class="tb-row">
+        <div class="tb-cell">
+          <div class="tb-key">Electronic Comm Node</div>
+          <div class="tb-val mono"><a href="mailto:panvekar49@gmail.com">panvekar49@gmail.com</a></div>
+        </div>
+        <div class="tb-cell">
+          <div class="tb-key">Telecommunication Link</div>
+          <div class="tb-val mono"><a href="tel:+918600883146">+91 86008 83146</a></div>
+        </div>
+        <div class="tb-cell">
+          <div class="tb-key">Geographic Anchor Node</div>
+          <div class="tb-val mono">Navi Mumbai, India[cite: 1, 2, 3]</div>
+        </div>
+      </div>
+      <div class="tb-row">
+        <div class="tb-cell">
+          <div class="tb-key">Professional Index Vector</div>
+          <div class="tb-cell-val mono"><a href="https://linkedin.com/in/piyush-anvekar" target="_blank">linkedin//piyush-anvekar</a></div>
+        </div>
+        <div class="tb-cell">
+          <div class="tb-key">Source Control Repository</div>
+          <div class="tb-cell-val mono"><a href="https://github.com/Piyush12201" target="_blank">github//Piyush12201</a></div>
+        </div>
+        <div class="tb-cell">
+          <div class="tb-key">Academic Base Institution</div>
+          <div class="tb-val">Vishwaniketan's iMEET (University of Mumbai) <span class="mono" style="font-size:12px; display:block; color:#556677;">B.E. CS (AI &amp; ML) · 2022-2026</span></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-meta">
+      <div>SPECIFICATION DRAFT: ARCHANGEL-VELLUM-LIGHT-V6</div>
+      <div>&copy; 2026 PIYUSH ANVEKAR. ALL LAYERS INTEGRATED SUCCESSFULLY.</div>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
