@@ -9,11 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-paper: #fdfbf7;
-    --ink: #111e2b;
-    --grid: #e2e8f0;
-    --accent: #c66a26;
-    --border-dark: #111e2b;
+    --bg-paper: #05100a;
+    --panel: rgba(5, 20, 12, 0.82);
+    --ink: #c9ffd8;
+    --muted: #5ea377;
+    --grid: rgba(0, 255, 65, 0.08);
+    --accent: #00ff66;
+    --border-dark: #00ff66;
   }
 
   * { box-sizing: border-box; }
@@ -21,16 +23,94 @@
   body {
     margin: 0;
     background-color: var(--bg-paper);
-    background-image: 
-      linear-gradient(to right, var(--grid) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-    background-size: 25px 25px;
     color: var(--ink);
     font-family: 'Fraunces', serif;
     line-height: 1.6;
+    position: relative;
   }
 
   .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  /* Matrix rain — fixed full-page backdrop, sits behind all content */
+  .matrix-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-paper);
+    overflow: hidden;
+    z-index: -1;
+    opacity: 0.55;
+  }
+
+  .matrix-column {
+    position: absolute;
+    top: -100%;
+    width: 20px;
+    height: 100%;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: bold;
+    animation: fall linear infinite;
+    white-space: nowrap;
+  }
+
+  .matrix-column::before {
+    content: "कोड01{}=>function()तकनीकconstasyncawait10101विज्ञानAPI.fetch()गणना";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(
+      to bottom,
+      #eaffef 0%,
+      #eaffef 5%,
+      #00ff66 10%,
+      #00ff66 20%,
+      #00dd55 30%,
+      #00bb44 40%,
+      #009933 50%,
+      #007722 60%,
+      #005518 70%,
+      #003310 80%,
+      rgba(0, 255, 102, 0.5) 90%,
+      transparent 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    writing-mode: vertical-lr;
+    letter-spacing: 1px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .matrix-column:nth-child(odd)::before {
+    content: "कोडconst x=1;तकनीकnpm run dev01010विज्ञानgit commit -m";
+  }
+  .matrix-column:nth-child(even)::before {
+    content: "<div>यंत्रuseState()बुद्धिSELECT * FROMज्ञानawait fetch()";
+  }
+  .matrix-column:nth-child(3n)::before {
+    content: "संगणकnpm installसूत्रif(err) throwआविष्कारreturn true;";
+  }
+  .matrix-column:nth-child(4n)::before {
+    content: "पीयूषconsole.log()अन्वेकरnew Promise()नवाचार0xFF import";
+  }
+  .matrix-column:nth-child(5n)::before {
+    content: "सिद्धिgit push originदेवclass App extends0101ज्ञानम्npm test";
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10%); opacity: 1; }
+    100% { transform: translateY(200%); opacity: 0; }
+  }
+
+  /* Panel utility — dark translucent card so the rain shows faintly through the gaps */
+  .crosshatch {
+    background-color: var(--panel);
+    backdrop-filter: blur(2px);
+  }
 
   /* Registration Framing Marks */
   .mark-corner { position: fixed; width: 24px; height: 24px; border: 1px solid var(--ink); z-index: 100; opacity: 0.6; pointer-events: none; }
@@ -46,7 +126,6 @@
     justify-content: space-between; 
     align-items: center;
     border-bottom: 2px solid var(--border-dark);
-    background: var(--bg-paper);
     position: sticky;
     top: 0;
     z-index: 90;
@@ -54,7 +133,7 @@
   @media (max-width: 768px) { header { padding: 20px; flex-direction: column; gap: 15px; } }
 
   .brand { text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: 15px; }
-  .brand .box { border: 2px solid var(--ink); padding: 4px 10px; font-family: 'IBM Plex Mono'; font-weight: 600; font-size: 14px; }
+  .brand .box { border: 2px solid var(--ink); padding: 4px 10px; font-family: 'IBM Plex Mono'; font-weight: 600; font-size: 14px; background: var(--bg-paper); }
   .brand .title { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
   .brand .title span { block; font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
 
@@ -73,10 +152,10 @@
   h1 { font-size: clamp(38px, 5vw, 62px); font-weight: 400; line-height: 1.1; margin: 0 0 24px; letter-spacing: -0.02em; }
   h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
   
-  .byline { font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #556677; margin-bottom: 30px; }
+  .byline { font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 30px; }
   .byline b { color: var(--ink); }
 
-  .essay { font-size: 18px; color: #2d3d4d; font-weight: 300; text-align: justify; }
+  .essay { font-size: 18px; color: var(--muted); font-weight: 300; text-align: justify; }
   .essay p { margin: 0 0 20px; }
   .essay p:first-of-type::first-letter { font-size: 52px; float: left; line-height: 0.8; padding: 4px 8px 0 0; color: var(--accent); font-family: 'Fraunces'; }
 
@@ -85,12 +164,12 @@
   .btn.solid { background: var(--ink); color: var(--bg-paper); }
   .btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-  /* Sidebar Meta Index */
-  .meta-index-box { border: 1px solid var(--ink); padding: 30px; background: rgba(0,0,0,0.01); height: fit-content; }
+  /* Sidebar Meta Index — now carries the crosshatch texture */
+  .meta-index-box { border: 1px solid var(--ink); padding: 30px; height: fit-content; }
   .meta-index-box h3 { margin: 0 0 20px 0; font-family: 'IBM Plex Mono'; font-size: 12px; text-transform: uppercase; color: var(--accent); border-bottom: 1px dashed var(--ink); padding-bottom: 8px; }
   .meta-row { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono'; font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--grid); }
   .meta-row:last-child { border-bottom: none; }
-  .meta-row .k { color: #667788; }
+  .meta-row .k { color: var(--muted); }
   .meta-row .v { font-weight: 500; text-align: right; }
 
   /* Section Layouts */
@@ -100,9 +179,9 @@
 
   /* Experience Cards Extended Architecture */
   .exp-wrapper { display: flex; flex-direction: column; gap: 40px; }
-  .exp-item { border: 1px solid var(--ink); background: var(--bg-paper); }
+  .exp-item { border: 1px solid var(--ink); background: var(--panel); }
   
-  .exp-header { display: flex; justify-content: space-between; align-items: baseline; padding: 24px 30px; border-bottom: 1px solid var(--ink); background: rgba(0,0,0,0.02); }
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; padding: 24px 30px; border-bottom: 1px solid var(--ink); background: rgba(0,255,102,0.05); }
   @media (max-width: 600px) { .exp-header { flex-direction: column; gap: 5px; padding: 20px; } }
   .exp-title h3 { margin: 0; font-size: 24px; font-weight: 500; }
   .exp-title .sub { font-family: 'IBM Plex Mono'; font-size: 13px; color: var(--accent); margin-top: 4px; font-weight: 500; }
@@ -113,28 +192,28 @@
   .bullet-row:last-child { border-bottom: none; }
   @media (max-width: 768px) { .bullet-row { grid-template-columns: 1fr; gap: 8px; padding: 20px; } }
   .bullet-row .tag { font-family: 'IBM Plex Mono'; font-size: 11px; text-transform: uppercase; border: 1px solid var(--border-dark); padding: 3px 8px; width: fit-content; height: fit-content; font-weight: 500; }
-  .bullet-row p { margin: 0; font-size: 16px; color: #233343; text-align: justify; }
+  .bullet-row p { margin: 0; font-size: 16px; color: var(--muted); text-align: justify; }
 
   /* Projects Structural Grid */
   .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
   @media (max-width: 768px) { .project-grid { grid-template-columns: 1fr; } }
-  .project-card { border: 1px solid var(--ink); padding: 35px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+  .project-card { border: 1px solid var(--ink); padding: 35px; display: flex; flex-direction: column; justify-content: space-between; position: relative; background: var(--panel); }
   .project-card .award { position: absolute; top: 20px; right: 20px; font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; background: var(--ink); color: var(--bg-paper); padding: 2px 8px; font-weight: 500; }
   .project-card h4 { margin: 0 0 12px; font-size: 22px; font-weight: 500; padding-right: 80px; }
-  .project-card p { font-size: 15.5px; color: #3a4a5a; margin: 0 0 30px 0; }
+  .project-card p { font-size: 15.5px; color: var(--muted); margin: 0 0 30px 0; }
   .project-card .link { font-family: 'IBM Plex Mono'; font-size: 12px; color: var(--ink); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--ink); width: fit-content; padding-bottom: 2px; }
   .project-card .link:hover { color: var(--accent); border-color: var(--accent); }
 
   /* Toolkit / Matrix Split Listing */
   .skills-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
   @media (max-width: 768px) { .skills-matrix { grid-template-columns: 1fr; } }
-  .matrix-cell { border: 1px solid var(--ink); padding: 24px; }
+  .matrix-cell { border: 1px solid var(--ink); padding: 24px; background: var(--panel); }
   .matrix-cell h5 { margin: 0 0 12px 0; font-family: 'IBM Plex Mono'; font-size: 13px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--grid); padding-bottom: 6px; }
   .matrix-cell p { margin: 0; font-family: 'IBM Plex Mono'; font-size: 13.5px; color: var(--ink); line-height: 1.7; }
 
   /* Industrial Block Information Block Footer */
   .title-block-box { border: 2px solid var(--ink); display: flex; flex-direction: column; margin-top: 20px; }
-  .tb-row { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--ink); }
+  .tb-row { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--ink); background: var(--panel); }
   .tb-row:last-child { border-bottom: none; }
   .tb-row.top-accent { grid-template-columns: 2fr 1fr; }
   @media (max-width: 768px) { 
@@ -144,23 +223,25 @@
   }
   .tb-cell { padding: 20px 24px; border-right: 1px solid var(--ink); }
   .tb-cell:last-child { border-right: none; }
-  .tb-key { font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; color: #667788; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .tb-key { font-family: 'IBM Plex Mono'; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.05em; }
   .tb-val { font-size: 17px; font-weight: 500; }
   .tb-val.mono { font-family: 'IBM Plex Mono'; font-size: 14px; }
   .tb-val a { color: var(--ink); text-decoration: none; border-bottom: 1px dashed var(--accent); }
   .tb-val a:hover { color: var(--accent); border-color: var(--accent); }
 
-  .footer-meta { display: flex; justify-content: space-between; margin-top: 30px; font-family: 'IBM Plex Mono'; font-size: 11px; color: #667788; }
+  .footer-meta { display: flex; justify-content: space-between; margin-top: 30px; font-family: 'IBM Plex Mono'; font-size: 11px; color: var(--muted); }
 </style>
 </head>
 <body>
+
+<div class="matrix-container" id="matrixRain"></div>
 
 <div class="mark-corner tl"></div>
 <div class="mark-corner tr"></div>
 <div class="mark-corner bl"></div>
 <div class="mark-corner br"></div>
 
-<header>
+<header class="crosshatch">
   <a href="#" class="brand">
     <div class="box">PA</div>
     <div class="title">Piyush Anvekar <span>Full-Stack Engineer</span></div>
@@ -191,7 +272,7 @@
       </div>
     </div>
     
-    <div class="meta-index-box">
+    <div class="meta-index-box crosshatch">
       <h3>System Target Profile</h3>
       <div class="meta-row"><span class="k">Engineering Role</span><span class="v">Full-Stack Engineer</span></div>
       <div class="meta-row"><span class="k">Experience Metric</span><span class="v">2+ Years Active</span></div>
@@ -324,7 +405,7 @@
   <!-- Title Block Contact Footer Section -->
   <footer id="contact">
     <div class="section-label"><span>04 // Technical Document Title Block</span><span>Scale 1:1 Engine</span></div>
-    <div class="title-block-box">
+    <div class="title-block-box crosshatch">
       <div class="tb-row top-accent">
         <div class="tb-cell">
           <div class="tb-key">Designation Profile Document</div>
@@ -360,7 +441,7 @@
         </div>
         <div class="tb-cell">
           <div class="tb-key">Academic Base Institution</div>
-          <div class="tb-val">Vishwaniketan's iMEET (University of Mumbai) <span class="mono" style="font-size:12px; display:block; color:#556677;">B.E. CS (AI &amp; ML) · 2022-2026</span></div>
+          <div class="tb-val">Vishwaniketan's iMEET (University of Mumbai) <span class="mono" style="font-size:12px; display:block; color: var(--muted);">B.E. CS (AI &amp; ML) · 2022-2026</span></div>
         </div>
       </div>
     </div>
@@ -372,6 +453,35 @@
   </footer>
 
 </div>
+
+<script>
+  (function () {
+    const container = document.getElementById('matrixRain');
+    const spacing = 22; // px between columns
+
+    function buildColumns() {
+      container.innerHTML = '';
+      const count = Math.ceil(window.innerWidth / spacing) + 2;
+      for (let i = 0; i < count; i++) {
+        const col = document.createElement('div');
+        col.className = 'matrix-column';
+        col.style.left = (i * spacing) + 'px';
+        const duration = (5.5 + Math.random() * 4).toFixed(2);
+        const delay = (-1 * Math.random() * 8).toFixed(2);
+        col.style.animationDuration = duration + 's';
+        col.style.animationDelay = delay + 's';
+        container.appendChild(col);
+      }
+    }
+
+    buildColumns();
+    let resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(buildColumns, 250);
+    });
+  })();
+</script>
 
 </body>
 </html>
